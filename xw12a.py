@@ -54,10 +54,8 @@ class xw12a(object):
         for i in self.addr_rw:
             self.send(int(i))
         self.sda=Pin(self.sda_num,mode=Pin.IN)
-        if self.listen():
-            print('found')
-        else:
-            print('erro')
+        if not self.listen():
+            raise OSError('Get a NACK:xw12a should send ACK.')
         for i in range(16):
             res = self.listen()
             alist.append(res)
@@ -82,3 +80,4 @@ if __name__ == '__main__':
         print(a.read())
         print(a.read_list())
         sleep(1)
+                        
